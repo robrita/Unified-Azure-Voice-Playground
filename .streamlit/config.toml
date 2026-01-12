@@ -1,0 +1,42 @@
+[client]
+showSidebarNavigation=false
+
+[server]
+maxUploadSize = 20
+
+[theme]
+# Dark theme base
+base = "dark"
+
+# Primary accent color 
+primaryColor = "#3B82F6"
+
+# Background color of the app (dark gray)
+backgroundColor = "#4B5563"
+
+# Background color used for most interactive widgets (lighter gray)
+secondaryBackgroundColor = "#6B7280"
+
+# Color used for almost all text (light color for dark backgrounds)
+textColor = "#F9FAFB"
+
+# Font family for all text (Oswald from Google Fonts)
+font = "Oswald:https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap"
+
+# Font family for headings (also Oswald)
+headingFont = "Oswald:https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap"
+
+# Heading font weight 
+headingFontWeights = 600
+
+# Border radius for UI elements 
+baseRadius = "10px"
+
+# Button border radius 
+buttonRadius = "10px"
+
+# Border color (light gray for visibility on dark background)
+borderColor = "#9CA3AF"
+
+# Code background color (darker than widgets for contrast)
+codeBackgroundColor = "#374151"

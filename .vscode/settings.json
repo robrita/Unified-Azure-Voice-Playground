@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "TODO.txt": "plaintext"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false
+  }
+}

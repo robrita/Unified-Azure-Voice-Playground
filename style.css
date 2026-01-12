@@ -1,0 +1,324 @@
+/* CSS Variables for Theme Support - Dark theme as default */
+:root {
+    --primary-color: #3B82F6;
+    --primary-dark: #1E3A8A;
+    --text-primary: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --background-light: #4B5563;
+    --background-card: #6B7280;
+    --border-color: #9CA3AF;
+}
+
+/* Dark mode variables */
+[data-theme="dark"], 
+.stApp[data-theme="dark"],
+html[data-theme="dark"] {
+    --text-primary: #F9FAFB;
+    --text-secondary: #D1D5DB;
+    --background-light: #4B5563;
+    --background-card: #6B7280;
+    --border-color: #9CA3AF;
+}
+
+/* Light mode overrides (when user explicitly chooses light theme) */
+[data-theme="light"], 
+.stApp[data-theme="light"],
+html[data-theme="light"] {
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --background-light: #FFFFFF;
+    --background-card: #F9FAFB;
+    --border-color: #E5E7EB;
+}
+
+/* Auto-detect system theme - keep dark as default */
+@media (prefers-color-scheme: light) {
+    :root {
+        --text-primary: #1F2937;
+        --text-secondary: #6B7280;
+        --background-light: #FFFFFF;
+        --background-card: #F9FAFB;
+        --border-color: #E5E7EB;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #F9FAFB;
+        --text-secondary: #D1D5DB;
+        --background-light: #4B5563;
+        --background-card: #6B7280;
+        --border-color: #9CA3AF;
+    }
+}
+
+/* Main Title with gradient effect (not configurable via theme) */
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(90deg, #3B82F6 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Override for Document Processing Dashboard header to be white */
+/* Target the first h1 element or use a more specific selector */
+.stMarkdown h1:first-of-type,
+[data-testid="stMarkdownContainer"] h1:first-child,
+.block-container h1:first-of-type {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Alternative: Target by content using attribute selectors if you add a class */
+.document-dashboard-title {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    background-clip: unset !important;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Sidebar gradient background (not configurable via theme) */
+.css-1d391kg, [data-testid="stSidebar"] {
+    background: linear-gradient(180deg, var(--primary-dark) 0%, #3B82F6 100%);
+}
+
+.css-1d391kg p, [data-testid="stSidebar"] p {
+    color: white !important;
+    font-weight: 500;
+}
+
+.css-1d391kg .stMarkdown, [data-testid="stSidebar"] .stMarkdown {
+    color: white !important;
+}
+
+.css-1d391kg label, [data-testid="stSidebar"] label {
+    color: white !important;
+}
+
+/* Button gradient and hover effects (not fully configurable via theme) */
+.stButton > button {
+    background: linear-gradient(90deg, #3B82F6 0%, var(--primary-dark) 100%) !important;
+    color: white !important;
+    padding: 10px 25px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Form Submit Button styling to match regular buttons */
+.stFormSubmitButton > button {
+    background: linear-gradient(90deg, #3B82F6 0%, var(--primary-dark) 100%) !important;
+    color: white !important;
+    padding: 10px 25px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s;
+}
+
+.stFormSubmitButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Link Button styling to match regular buttons */
+.stLinkButton > a {
+    background: linear-gradient(90deg, #3B82F6 0%, var(--primary-dark) 100%) !important;
+    color: white !important;
+    padding: 10px 25px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.stLinkButton > a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Cards */
+div.stMetric {
+    background: var(--background-card) !important;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+div.stMetric:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+div.stMetric label {
+    color: var(--text-secondary) !important;
+}
+
+div.stMetric [data-testid="metric-value"] {
+    color: var(--text-primary) !important;
+}
+
+/* Expander specific styling */
+.streamlit-expanderHeader {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+}
+
+/* Tab styling (fonts now handled by theme) */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 24px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-weight: 600;
+    padding: 10px 20px;
+    color: var(--text-primary) !important;
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    color: var(--primary-color) !important;
+}
+
+/* Dark mode font color fixes - Override Streamlit theme in dark mode */
+@media (prefers-color-scheme: dark) {
+    /* Force all text elements to use dark theme colors */
+    .stApp, .stApp * {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Markdown content */
+    .stMarkdown, .stMarkdown * {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Headers */
+    h1, h2, h3, h4, h5, h6,
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, 
+    .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Text elements */
+    p, div, span, label, .stText {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Streamlit components */
+    [class*="st"], [data-testid*="st"] {
+        color: var(--text-primary) !important;
+    }
+}
+
+/* Dark theme attribute selectors */
+[data-theme="dark"] .stApp,
+[data-theme="dark"] .stApp *,
+html[data-theme="dark"] .stApp,
+html[data-theme="dark"] .stApp * {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .stMarkdown,
+[data-theme="dark"] .stMarkdown *,
+html[data-theme="dark"] .stMarkdown,
+html[data-theme="dark"] .stMarkdown * {
+    color: var(--text-primary) !important;
+}
+
+/* Global text styling overrides for all themes */
+
+/* App Settings */
+.stApp {
+    margin: auto;
+    overflow: auto;
+    background-color: var(--background-light) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Background patterns - Dark theme gets subtle pattern, light theme is clean */
+.stApp {
+    background-image:
+      linear-gradient(to right, rgba(107, 114, 128, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(107, 114, 128, 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+    background-repeat: repeat;
+}
+
+@media (prefers-color-scheme: light) {
+    .stApp {
+        background-image: none;
+    }
+}
+
+[data-theme="light"] .stApp,
+html[data-theme="light"] .stApp {
+    background-image: none !important;
+}
+
+/* Container Styles - Theme Aware */
+.st-key-container{
+  padding: 2em;
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 2px solid var(--primary-color);
+  border-radius: 3em;
+  color: var(--text-primary) !important;
+}
+
+.st-key-container1, .st-key-container2, .st-key-container3, .st-key-container4{
+  padding: 2em;
+  background-color: var(--background-card);
+  border: 1px solid var(--border-color);
+  border-radius: 3em;
+  color: var(--text-primary) !important;
+}
+
+.st-key-container0, .st-key-container5, .st-key-container6, .st-key-container7, .st-key-container8{
+  padding: 2em;
+  background-color: var(--background-card);
+  border: 1px solid var(--border-color);
+  border-radius: 3em;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure text in containers is visible */
+.st-key-container *, .st-key-container1 *, .st-key-container2 *, 
+.st-key-container3 *, .st-key-container4 *, .st-key-container5 *, 
+.st-key-container6 *, .st-key-container7 *, .st-key-container8 * {
+  color: var(--text-primary) !important;
+}
+
+
+/* Layout customizations */
+.block-container {
+    padding-top: 1.5rem;
+}
+
+/* Hide Streamlit branding elements */
+.stAppDeployButton {
+    display: none;
+}
+.st-emotion-cache-15ecox0 {
+    display: none;
+}
+.viewerBadge_container__r5tak {
+    display: none;
+}
+.styles_viewerBadge__CvC9N {
+    display: none;
+}
