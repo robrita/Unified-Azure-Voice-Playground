@@ -1,4 +1,4 @@
-# Makefile for Document Extraction Dashboard
+# Makefile for Azure Personal Voice Playground
 # Note: On Windows, you may need to install 'make' via chocolatey or use WSL
 
 .PHONY: lint run check-and-run format install test test-unit test-integration test-cov test-fast push revert help

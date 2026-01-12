@@ -18,12 +18,12 @@ VALID_SERVICE_NAMES = {
 
 def render_sidebar():
     """
-    Render the common sidebar navigation for all pages in the Document Processing application.
+    Render the common sidebar navigation for all pages in the Voice Playground application.
     This function should be called on every page to maintain consistent navigation.
     """
     # Configure page
     st.set_page_config(
-        page_title="Document Processing Dashboard",
+        page_title="Azure Personal Voice Playground",
         page_icon="🚀",
         layout="wide",
         initial_sidebar_state="expanded",
@@ -40,7 +40,7 @@ def render_sidebar():
 
     with st.sidebar:
         with st.container(border=True):
-            st.page_link("app.py", label="Document Extraction", icon="📑")
+            st.page_link("app.py", label="Voice Playground", icon="🎤")
             st.page_link("pages/pg3_Pricing.py", label="Pricing", icon="💰")
             st.page_link("pages/pg4_Personal_Voice.py", label="Personal Voice", icon="🎤")
 

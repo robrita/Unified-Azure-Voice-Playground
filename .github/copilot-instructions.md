@@ -1,8 +1,8 @@
-# Document Extraction Dashboard - AI Agent Instructions
+# Azure Personal Voice Playground - AI Agent Instructions
 
 ## Project Overview
 
-Multi-service document extraction platform built with **Streamlit 1.50.0**, connecting to 6+ Azure AI services via pluggable handlers. Extracts structured data from PDFs/images, saves normalized JSON results, and visualizes extraction performance across services.
+A Streamlit-based playground for testing Azure Speech Service's Personal Voice feature, built with **Streamlit 1.50.0**, connecting to Azure AI services via pluggable handlers. Create custom text-to-speech voices using audio samples, manage speaker profiles, and synthesize speech with personalized voices.
 
 **Tech Stack**: Python 3.11+ | Streamlit | uv/pyproject.toml | Azure AI Services | Ruff | pytest (100% coverage)
 

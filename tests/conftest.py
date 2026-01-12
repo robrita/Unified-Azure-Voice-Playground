@@ -1,5 +1,5 @@
 """
-Pytest configuration and shared fixtures for document extraction tests.
+Pytest configuration and shared fixtures for voice playground tests.
 
 This module provides common fixtures and configuration for all test modules,
 including mock services, sample files, and environment setup.

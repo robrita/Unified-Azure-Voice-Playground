@@ -1,7 +1,7 @@
 [project]
-name = "doc-extraction"
+name = "voice-playground"
 version = "0.1.0"
-description = "Document Processing Dashboard - Comprehensive Document Extraction and Analysis Platform"
+description = "Azure Personal Voice Playground - Create, manage, and test custom text-to-speech voices using Azure Speech Services"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

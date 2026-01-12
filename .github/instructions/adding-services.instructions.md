@@ -1,11 +1,11 @@
 ---
-description: Step-by-step guide for adding new extraction services
+description: Step-by-step guide for adding new voice playground services
 applyTo: 'handlers/*.py, app.py, tests/*.py'
 ---
 
 # Adding a New Service
 
-Follow these steps to add a new document extraction service:
+Follow these steps to add a new voice playground service:
 
 ## 1. Create Handler
 Create `handlers/new_service.py` with class implementing:
