@@ -26,7 +26,19 @@ cd Unified-Azure-Voice-Playground
 uv sync
 ```
 
-3. **Configure Azure Speech credentials:**
+3. **Activate the virtual environment:**
+
+**On Windows:**
+```bash
+.venv\Scripts\activate
+```
+
+**On Linux/macOS:**
+```bash
+source .venv/bin/activate
+```
+
+4. **Configure Azure Speech credentials:**
 
 Create a `.env` file or configure through the UI:
 ```bash
