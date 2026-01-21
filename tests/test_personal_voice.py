@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from utils.speech_personal_voice import (
+from helpers.speech_personal_voice import (
     PersonalVoiceConfig,
     build_personal_voice_ssml,
     custom_voice_create_project,
@@ -110,7 +110,7 @@ class _FakeSpeechSDK:
 class TestPersonalVoiceConfigPersistence:
     @pytest.mark.unit
     def test_save_and_load_roundtrip(self, tmp_path):
-        from utils.speech_personal_voice import SpeakerProfile
+        from helpers.speech_personal_voice import SpeakerProfile
 
         profile = SpeakerProfile(
             id="profile_1",
@@ -176,7 +176,7 @@ class TestPersonalVoiceSsml:
 class TestPersonalVoiceSynthesis:
     @pytest.mark.unit
     def test_synthesize_success_writes_output(self, tmp_path):
-        from utils.speech_personal_voice import SpeakerProfile
+        from helpers.speech_personal_voice import SpeakerProfile
 
         profile = SpeakerProfile(
             id="profile_1",
@@ -220,7 +220,7 @@ class TestPersonalVoiceSynthesis:
 
     @pytest.mark.unit
     def test_synthesize_canceled_returns_error(self, tmp_path):
-        from utils.speech_personal_voice import SpeakerProfile
+        from helpers.speech_personal_voice import SpeakerProfile
 
         profile = SpeakerProfile(
             id="profile_1",

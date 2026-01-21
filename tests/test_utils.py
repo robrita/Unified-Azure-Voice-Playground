@@ -14,7 +14,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_creates_temp_file(self, tmp_path, monkeypatch):
         """Test saving extraction results creates temp JSON file."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         # Change to temp directory so outputs/temp will be created there
         monkeypatch.chdir(tmp_path)
@@ -49,7 +49,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_rounds_confidence_to_three_decimals(self, tmp_path, monkeypatch):
         """Test confidence scores are rounded to 3 decimal places."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         monkeypatch.chdir(tmp_path)
 
@@ -84,7 +84,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_with_none_confidence_defaults_to_zero(self, tmp_path, monkeypatch):
         """Test None confidence values default to 0.0."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         monkeypatch.chdir(tmp_path)
 
@@ -108,7 +108,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_handles_fields_with_value_key(self, tmp_path, monkeypatch):
         """Test extraction handles fields using 'value' instead of 'content'."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         monkeypatch.chdir(tmp_path)
 
@@ -138,7 +138,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_handles_missing_confidence_in_fields(self, tmp_path, monkeypatch):
         """Test extraction handles fields without confidence key."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         monkeypatch.chdir(tmp_path)
 
@@ -167,7 +167,7 @@ class TestSaveExtractionToJson:
 
     def test_save_extraction_creates_directory_if_not_exists(self, tmp_path, monkeypatch):
         """Test extraction creates temp directory if it doesn't exist."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         monkeypatch.chdir(tmp_path)
 
@@ -191,7 +191,7 @@ class TestSaveExtractionToJson:
     @patch("streamlit.warning")
     def test_save_extraction_handles_json_write_error(self, mock_warning):
         """Test extraction handles errors when writing JSON file."""
-        from utils import save_extraction_to_json
+        from helpers.utils import save_extraction_to_json
 
         fields = {"tin": {"content": "123-456-789-00000", "confidence": 0.98}}
 
@@ -216,7 +216,7 @@ class TestConsolidateTempExtractions:
 
     def test_consolidate_creates_new_results_file(self, tmp_path, monkeypatch):
         """Test consolidation creates new results file when none exists."""
-        from utils import consolidate_temp_extractions
+        from helpers.utils import consolidate_temp_extractions
 
         monkeypatch.chdir(tmp_path)
 
@@ -253,7 +253,7 @@ class TestConsolidateTempExtractions:
 
     def test_consolidate_appends_to_existing_file(self, tmp_path, monkeypatch):
         """Test consolidation appends to existing results."""
-        from utils import consolidate_temp_extractions
+        from helpers.utils import consolidate_temp_extractions
 
         monkeypatch.chdir(tmp_path)
 
@@ -306,7 +306,7 @@ class TestCleanAndDeleteTempFiles:
 
     def test_clean_temp_extraction_files(self, tmp_path, monkeypatch):
         """Test cleaning temp files before extraction."""
-        from utils import clean_temp_extraction_files
+        from helpers.utils import clean_temp_extraction_files
 
         monkeypatch.chdir(tmp_path)
 
@@ -325,7 +325,7 @@ class TestCleanAndDeleteTempFiles:
 
     def test_delete_temp_extraction_files(self, tmp_path, monkeypatch):
         """Test deleting temp files after consolidation."""
-        from utils import delete_temp_extraction_files
+        from helpers.utils import delete_temp_extraction_files
 
         monkeypatch.chdir(tmp_path)
 
@@ -345,7 +345,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_returns_true_when_key_exists(self, mock_session_state):
         """Test keep_state returns True when key already exists."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         # Pre-populate session state
         mock_session_state["existing_key"] = "existing_value"
@@ -358,7 +358,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_updates_existing_value(self, mock_session_state):
         """Test keep_state updates existing value when new value provided."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         # Pre-populate session state
         mock_session_state["test_key"] = "old_value"
@@ -371,7 +371,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_handles_empty_string(self, mock_session_state):
         """Test keep_state treats empty string as falsy."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         result = keep_state("", "test_key")
 
@@ -381,7 +381,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_handles_zero(self, mock_session_state):
         """Test keep_state treats zero as falsy."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         result = keep_state(0, "test_key")
 
@@ -391,7 +391,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_handles_list(self, mock_session_state):
         """Test keep_state stores list values."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         test_list = [1, 2, 3, 4, 5]
         result = keep_state(test_list, "list_key")
@@ -402,7 +402,7 @@ class TestCleanAndDeleteTempFiles:
     @patch("streamlit.session_state", new_callable=dict)
     def test_keep_state_handles_dict(self, mock_session_state):
         """Test keep_state stores dictionary values."""
-        from utils import keep_state
+        from helpers.utils import keep_state
 
         test_dict = {"key1": "value1", "key2": "value2"}
         result = keep_state(test_dict, "dict_key")
@@ -423,7 +423,7 @@ class TestRenderSidebar:
         self, mock_sidebar, mock_markdown, mock_logo, mock_config
     ):
         """Test render_sidebar sets up page configuration."""
-        from utils import render_sidebar
+        from helpers.utils import render_sidebar
 
         render_sidebar()
 
@@ -442,7 +442,7 @@ class TestRenderSidebar:
     @patch("streamlit.sidebar")
     def test_render_sidebar_loads_css(self, mock_sidebar, mock_markdown, mock_logo, mock_config):
         """Test render_sidebar loads CSS file."""
-        from utils import render_sidebar
+        from helpers.utils import render_sidebar
 
         render_sidebar()
 
@@ -459,7 +459,7 @@ class TestRenderSidebar:
     @patch("streamlit.sidebar")
     def test_render_sidebar_sets_logo(self, mock_sidebar, mock_markdown, mock_logo, mock_config):
         """Test render_sidebar sets Azure AI logo."""
-        from utils import render_sidebar
+        from helpers.utils import render_sidebar
 
         render_sidebar()
 

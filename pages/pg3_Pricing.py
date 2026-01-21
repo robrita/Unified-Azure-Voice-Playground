@@ -4,7 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 sys.path.append("..")
-from utils import render_sidebar
+from helpers.utils import render_sidebar
 
 # Load environment variables
 load_dotenv()

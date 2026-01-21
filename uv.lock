@@ -494,65 +494,6 @@ wheels = [
 ]
 
 [[package]]
-name = "doc-extraction"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "azure-ai-documentintelligence" },
-    { name = "azure-ai-projects" },
-    { name = "azure-cognitiveservices-speech" },
-    { name = "azure-core" },
-    { name = "azure-identity" },
-    { name = "dotenv" },
-    { name = "openai" },
-    { name = "pandas" },
-    { name = "pillow" },
-    { name = "plotly" },
-    { name = "pydantic" },
-    { name = "pymupdf" },
-    { name = "python-dotenv" },
-    { name = "requests" },
-    { name = "streamlit" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "azure-ai-documentintelligence", specifier = ">=1.0.2" },
-    { name = "azure-ai-projects", specifier = ">=1.0.0" },
-    { name = "azure-cognitiveservices-speech", specifier = ">=1.38.0" },
-    { name = "azure-core", specifier = ">=1.35.1" },
-    { name = "azure-identity", specifier = ">=1.25.1" },
-    { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "openai", specifier = "==2.3.0" },
-    { name = "pandas", specifier = "==2.3.3" },
-    { name = "pillow", specifier = ">=11.1.0" },
-    { name = "plotly", specifier = "==6.3.1" },
-    { name = "pydantic", specifier = ">=2.10.6" },
-    { name = "pymupdf", specifier = ">=1.26.5" },
-    { name = "python-dotenv", specifier = ">=1.1.1" },
-    { name = "requests", specifier = ">=2.32.0" },
-    { name = "streamlit", specifier = "==1.50.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=8.0.0" },
-    { name = "pytest-asyncio", specifier = ">=0.23.0" },
-    { name = "pytest-cov", specifier = ">=4.1.0" },
-    { name = "pytest-mock", specifier = ">=3.12.0" },
-    { name = "ruff", specifier = ">=0.8.4" },
-]
-
-[[package]]
 name = "dotenv"
 version = "0.9.9"
 source = { registry = "https://pypi.org/simple" }
@@ -1782,6 +1723,65 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/15/22/9ee70a2574a4f4599c47dd506532914ce044817c7752a79b6a51286319bc/urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760", size = 393185, upload-time = "2025-06-18T14:07:41.644Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc", size = 129795, upload-time = "2025-06-18T14:07:40.39Z" },
+]
+
+[[package]]
+name = "voice-playground"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "azure-ai-documentintelligence" },
+    { name = "azure-ai-projects" },
+    { name = "azure-cognitiveservices-speech" },
+    { name = "azure-core" },
+    { name = "azure-identity" },
+    { name = "dotenv" },
+    { name = "openai" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "plotly" },
+    { name = "pydantic" },
+    { name = "pymupdf" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+    { name = "streamlit" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "azure-ai-documentintelligence", specifier = ">=1.0.2" },
+    { name = "azure-ai-projects", specifier = ">=1.0.0" },
+    { name = "azure-cognitiveservices-speech", specifier = ">=1.38.0" },
+    { name = "azure-core", specifier = ">=1.35.1" },
+    { name = "azure-identity", specifier = ">=1.25.1" },
+    { name = "dotenv", specifier = ">=0.9.9" },
+    { name = "openai", specifier = "==2.3.0" },
+    { name = "pandas", specifier = "==2.3.3" },
+    { name = "pillow", specifier = ">=11.1.0" },
+    { name = "plotly", specifier = "==6.3.1" },
+    { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "pymupdf", specifier = ">=1.26.5" },
+    { name = "python-dotenv", specifier = ">=1.1.1" },
+    { name = "requests", specifier = ">=2.32.0" },
+    { name = "streamlit", specifier = "==1.50.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.0.0" },
+    { name = "pytest-asyncio", specifier = ">=0.23.0" },
+    { name = "pytest-cov", specifier = ">=4.1.0" },
+    { name = "pytest-mock", specifier = ">=3.12.0" },
+    { name = "ruff", specifier = ">=0.8.4" },
 ]
 
 [[package]]

@@ -94,6 +94,11 @@ The application opens at `http://localhost:8501`
 - Download synthesized audio as WAV files
 - Debug options (word boundaries, SSML logging)
 
+### 🎙️ Voice Gallery
+- Browse sample Dragon HD Omni voices and filter by locale, gender, age group
+- Adjust prosody (pitch, rate, volume) and auto-generate SSML
+- Download SSML or preview audio using Speech SDK (AZURE_SPEECH_REGION/KEY)
+
 ### 💰 Pricing
 - View Azure Speech Service pricing information
 - Compare Neural TTS vs Personal Voice features

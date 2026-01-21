@@ -16,8 +16,7 @@ from dotenv import load_dotenv
 
 sys.path.append("..")
 
-from utils import render_sidebar
-from utils.speech_personal_voice import (
+from helpers.speech_personal_voice import (
     CUSTOM_VOICE_API_VERSION,
     DEFAULT_CONFIG_PATH,
     DEFAULT_OUTPUT_WAV_PATH,
@@ -30,6 +29,7 @@ from utils.speech_personal_voice import (
     save_personal_voice_config,
     synthesize_personal_voice_to_wave_file,
 )
+from helpers.utils import render_sidebar
 
 load_dotenv()
 

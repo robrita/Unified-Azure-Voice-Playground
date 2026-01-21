@@ -1,0 +1,142 @@
+[
+    {
+        "Voice Name": "en-US-AvaNeural",
+        "Locale": "en-US",
+        "Description": "A bright, engaging voice with a beautiful tone. Standard neural voice available in all regions.",
+        "Gender": "Female",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-AndrewNeural",
+        "Locale": "en-US",
+        "Description": "A warm, engaging voice. Standard neural voice available in all regions.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "en-US-JennyNeural",
+        "Locale": "en-US",
+        "Description": "A youthful voice with a wide range of expressions. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-GuyNeural",
+        "Locale": "en-US",
+        "Description": "A friendly voice with slightly whimsical undertones. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-AriaNeural",
+        "Locale": "en-US",
+        "Description": "A clear-sounding voice with great versatility. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "en-US-DavisNeural",
+        "Locale": "en-US",
+        "Description": "A calm and relaxed voice that can switch between tones seamlessly. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "en-US-BrianNeural",
+        "Locale": "en-US",
+        "Description": "A youthful, cheerful, and versatile voice. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-EmmaNeural",
+        "Locale": "en-US",
+        "Description": "A friendly, sincere voice ideal for education. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "en-US-Ava:DragonHDLatestNeural",
+        "Locale": "en-US",
+        "Description": "HD voice - A bright, engaging voice with enhanced naturalness. Available in select regions.",
+        "Gender": "Female",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-Andrew:DragonHDLatestNeural",
+        "Locale": "en-US",
+        "Description": "HD voice - A warm, engaging voice with enhanced naturalness. Available in select regions.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "en-US-Brian:DragonHDLatestNeural",
+        "Locale": "en-US",
+        "Description": "HD voice - A youthful, cheerful voice. Available in select regions.",
+        "Gender": "Male",
+        "Age Group": "Young Adult"
+    },
+    {
+        "Voice Name": "en-US-Emma:DragonHDLatestNeural",
+        "Locale": "en-US",
+        "Description": "HD voice - A friendly, sincere voice. Available in select regions.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "de-DE-ConradNeural",
+        "Locale": "de-DE",
+        "Description": "An engaging and friendly German voice. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "de-DE-KatjaNeural",
+        "Locale": "de-DE",
+        "Description": "A calm and pleasant German voice. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "fr-FR-DeniseNeural",
+        "Locale": "fr-FR",
+        "Description": "A warm French female voice. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "fr-FR-HenriNeural",
+        "Locale": "fr-FR",
+        "Description": "A professional French male voice. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "es-ES-ElviraNeural",
+        "Locale": "es-ES",
+        "Description": "A clear-sounding Spanish voice. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "es-ES-AlvaroNeural",
+        "Locale": "es-ES",
+        "Description": "A confident and animated Spanish voice. Standard neural voice.",
+        "Gender": "Male",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "ja-JP-NanamiNeural",
+        "Locale": "ja-JP",
+        "Description": "A pleasant Japanese female voice. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    },
+    {
+        "Voice Name": "zh-CN-XiaoxiaoNeural",
+        "Locale": "zh-CN",
+        "Description": "A warm Chinese female voice. Standard neural voice.",
+        "Gender": "Female",
+        "Age Group": "Adult"
+    }
+]

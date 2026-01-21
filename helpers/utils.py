@@ -21,6 +21,7 @@ def render_sidebar():
     Render the common sidebar navigation for all pages in the Voice Playground application.
     This function should be called on every page to maintain consistent navigation.
     """
+    logger.info("Rendering sidebar navigation")
     # Configure page
     st.set_page_config(
         page_title="Azure Personal Voice Playground",
@@ -40,9 +41,11 @@ def render_sidebar():
 
     with st.sidebar:
         with st.container(border=True):
-            st.page_link("app.py", label="Voice Playground", icon="🎤")
+            st.page_link("app.py", label="Personal Voice", icon="🎤")
+            st.page_link("pages/pg1_Voice_Gallery.py", label="Voice Gallery", icon="🎙️")
             st.page_link("pages/pg3_Pricing.py", label="Pricing", icon="💰")
-            st.page_link("pages/pg4_Personal_Voice.py", label="Personal Voice", icon="🎤")
+
+        st.caption("Custom nav loaded · Voice Gallery link rendered")
 
         st.image(
             "https://miro.medium.com/1*zBt3FbYHV2-CWcBnkYoQRA.png",
