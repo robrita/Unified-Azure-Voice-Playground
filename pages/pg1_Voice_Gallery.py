@@ -13,6 +13,11 @@ try:  # Optional dependency
 except Exception:  # pragma: no cover
     speechsdk = None
 
+try:  # Optional dependency for token-based auth
+    from azure.identity import DefaultAzureCredential
+except Exception:  # pragma: no cover
+    DefaultAzureCredential = None
+
 import sys
 
 sys.path.append("..")
@@ -22,8 +27,43 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
+# Use working voices with standard Neural voices (available in all regions)
 DEFAULT_VOICES_PATH = Path("inputs") / "voice_gallery_voices.json"
 TEMP_AUDIO_PATH = Path("outputs") / "temp" / "voice_gallery_preview.wav"
+
+# Cognitive Services token scope for Azure Identity
+COGNITIVE_SERVICES_SCOPE = "https://cognitiveservices.azure.com/.default"
+
+
+def _get_speech_auth_token(resource_id: str = "") -> str | None:
+    """Get an authorization token using DefaultAzureCredential.
+
+    Args:
+        resource_id: Optional Azure resource ID. If provided, returns token in
+            aad#<resource_id>#<token> format required for multi-service resources.
+
+    Returns the token string or None if authentication fails.
+    """
+    if DefaultAzureCredential is None:
+        logger.warning("azure-identity not installed; cannot use token-based auth")
+        return None
+
+    try:
+        credential = DefaultAzureCredential()
+        token = credential.get_token(COGNITIVE_SERVICES_SCOPE)
+        logger.info("Obtained speech auth token via DefaultAzureCredential")
+
+        # For multi-service Cognitive Services resources with local auth disabled,
+        # we need to use the aad# format: "aad#<resource-id>#<access-token>"
+        if resource_id:
+            aad_token = f"aad#{resource_id}#{token.token}"
+            logger.info("Using aad# token format with resource ID")
+            return aad_token
+
+        return token.token
+    except Exception as exc:
+        logger.warning("Failed to get token via DefaultAzureCredential: %s", exc)
+        return None
 
 
 @st.cache_data
@@ -84,15 +124,60 @@ def build_ssml(
 
 
 def synthesize_speech(
-    voice_name: str, text: str, endpoint: str, key: str, output_path: Path
+    voice_name: str,
+    text: str,
+    key: str,
+    region: str,
+    output_path: Path,
+    endpoint: str = "",
+    resource_id: str = "",
 ) -> dict[str, Any]:
-    """Synthesize speech using Azure Speech SDK with endpoint URL."""
+    """Synthesize speech using Azure Speech SDK.
+
+    Supports both dedicated Speech resources and multi-service Cognitive Services resources.
+    Falls back to DefaultAzureCredential if no key is provided.
+
+    Args:
+        resource_id: Azure resource ID for multi-service resources with local auth disabled.
+            Required for aad# token format.
+    """
     if speechsdk is None:
         return {"ok": False, "error": "azure-cognitiveservices-speech not installed"}
 
     try:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        speech_config = speechsdk.SpeechConfig(subscription=key, endpoint=endpoint)
+
+        # Create speech config based on available credentials
+        if key and region:
+            # Dedicated Speech resource with API key
+            speech_config = speechsdk.SpeechConfig(subscription=key, region=region)
+            logger.info(
+                "Speech config: region=%s, key=%s...%s, voice=%s",
+                region,
+                key[:4] if len(key) > 8 else "***",
+                key[-4:] if len(key) > 8 else "***",
+                voice_name,
+            )
+        elif region:
+            # Token-based auth with Azure Identity
+            # Pass resource_id for multi-service resources with local auth disabled
+            auth_token = _get_speech_auth_token(resource_id=resource_id)
+            if not auth_token:
+                return {
+                    "ok": False,
+                    "error": "Failed to obtain auth token via DefaultAzureCredential",
+                }
+            speech_config = speechsdk.SpeechConfig(auth_token=auth_token, region=region)
+            logger.info(
+                "Using DefaultAzureCredential token for speech synthesis (resource_id=%s)",
+                "set" if resource_id else "not set",
+            )
+        else:
+            return {
+                "ok": False,
+                "error": "Missing AZURE_SPEECH_REGION (and optionally AZURE_SPEECH_KEY)",
+            }
+
         speech_config.speech_synthesis_voice_name = voice_name
         audio_config = speechsdk.audio.AudioOutputConfig(filename=str(output_path))
         synthesizer = speechsdk.SpeechSynthesizer(
@@ -239,25 +324,53 @@ def main() -> None:
 
         st.subheader("4️⃣ Voice Synthesis")
         with st.container(border=True):
-            endpoint = os.environ.get("AZURE_SPEECH_ENDPOINT", "")
             key = os.environ.get("AZURE_SPEECH_KEY", "")
-            if not endpoint or not key:
+            region = os.environ.get("AZURE_SPEECH_REGION", "")
+            endpoint = os.environ.get("AZURE_SPEECH_ENDPOINT", "")
+            resource_id = os.environ.get("AZURE_SPEECH_RESOURCE_ID", "")
+
+            # Debug: show what credentials are loaded
+            with st.expander("🔍 Debug: Credentials", expanded=False):
+                st.text(f"Region: {region}")
+                st.text(f"Key: {'*' * (len(key) - 4) + key[-4:] if len(key) > 4 else '(not set)'}")
+                st.text(f"Endpoint: {endpoint or '(not set)'}")
+                st.text(f"Resource ID: {resource_id or '(not set)'}")
+
+            # Check if we can authenticate (either key or Azure Identity)
+            can_use_identity = DefaultAzureCredential is not None and region
+            has_auth = bool(key) or can_use_identity
+
+            if not region:
+                st.info("Set AZURE_SPEECH_REGION in your .env to enable synthesis.")
+            elif not has_auth:
                 st.info(
-                    "Set AZURE_SPEECH_ENDPOINT and AZURE_SPEECH_KEY in your .env to enable synthesis."
+                    "Set AZURE_SPEECH_KEY or ensure Azure Identity (DefaultAzureCredential) "
+                    "is configured to enable synthesis."
                 )
             elif speechsdk is None:
                 st.warning("Install azure-cognitiveservices-speech to synthesize audio.")
             elif ssml is None:
                 st.info("Select a voice to synthesize.")
             else:
+                # Show auth method being used
+                if key:
+                    if endpoint:
+                        st.caption("🔑 Using subscription key + custom endpoint")
+                    else:
+                        st.caption("🔑 Using subscription key authentication")
+                else:
+                    st.caption("🔐 Using Azure Identity (DefaultAzureCredential)")
+
                 if st.button("🔊 Synthesize Voice", use_container_width=True):
                     with st.spinner("Synthesizing..."):
                         result = synthesize_speech(
                             voice_name=selected_voice_name,
                             text=text,
-                            endpoint=endpoint,
                             key=key,
+                            region=region,
                             output_path=TEMP_AUDIO_PATH,
+                            endpoint=endpoint,
+                            resource_id=resource_id,
                         )
                     if result.get("ok"):
                         st.success("✅ Audio synthesized!")

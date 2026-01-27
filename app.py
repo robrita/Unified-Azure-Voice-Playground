@@ -48,6 +48,8 @@ def _initialize_state() -> None:
         st.session_state.pv_speech_region = str(cfg_dict.get("speech_region", ""))
     if "pv_speech_key" not in st.session_state:
         st.session_state.pv_speech_key = str(cfg_dict.get("speech_key", ""))
+    if "pv_speech_resource_id" not in st.session_state:
+        st.session_state.pv_speech_resource_id = str(cfg_dict.get("speech_resource_id", ""))
     if "pv_voice_name" not in st.session_state:
         st.session_state.pv_voice_name = str(cfg_dict.get("voice_name", "DragonLatestNeural"))
     if "pv_language" not in st.session_state:
@@ -154,6 +156,14 @@ def main() -> None:
             )
 
             st.text_input(
+                "Speech resource ID",
+                value=str(cfg_dict.get("speech_resource_id", "")),
+                placeholder="/subscriptions/.../resourceGroups/.../providers/.../accounts/...",
+                help="Required for multi-service Cognitive Services with local auth disabled.",
+                key="pv_speech_resource_id",
+            )
+
+            st.text_input(
                 "Base voice name",
                 value=str(cfg_dict.get("voice_name", "DragonLatestNeural")),
                 placeholder="DragonLatestNeural",
@@ -175,6 +185,7 @@ def main() -> None:
                     cfg = _get_config_from_state()
                     cfg.speech_region = str(st.session_state.get("pv_speech_region", ""))
                     cfg.speech_key = str(st.session_state.get("pv_speech_key", ""))
+                    cfg.speech_resource_id = str(st.session_state.get("pv_speech_resource_id", ""))
                     cfg.voice_name = str(st.session_state.get("pv_voice_name", ""))
                     cfg.language = str(st.session_state.get("pv_language", ""))
                     save_personal_voice_config(cfg)
@@ -261,12 +272,16 @@ def main() -> None:
 
             speech_region_now = str(st.session_state.get("pv_speech_region", "")).strip()
             speech_key_now = str(st.session_state.get("pv_speech_key", "")).strip()
-            missing_speech_creds = not speech_region_now or not speech_key_now
+            speech_resource_id_now = str(st.session_state.get("pv_speech_resource_id", "")).strip()
+            # Allow Azure Identity when resource_id is set (no key needed)
+            missing_speech_creds = not speech_region_now or (
+                not speech_key_now and not speech_resource_id_now
+            )
             if missing_speech_creds:
                 st.info(
-                    "Set `Speech region` + `Speech key` in **0️⃣ Configuration** before creating a "
-                    "Personal Voice. You can also set env vars `AZURE_SPEECH_REGION` and "
-                    "`AZURE_SPEECH_KEY` in your `.env` file."
+                    "Set `Speech region` + `Speech key` (or `Speech resource ID` for Azure Identity) "
+                    "in **0️⃣ Configuration** before creating a Personal Voice. You can also set env "
+                    "vars `AZURE_SPEECH_REGION` and `AZURE_SPEECH_KEY` or `AZURE_SPEECH_RESOURCE_ID`."
                 )
 
             create_col1, create_col2 = st.columns(2, gap="medium")

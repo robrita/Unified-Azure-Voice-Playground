@@ -12,7 +12,45 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+try:  # Optional dependency for token-based auth
+    from azure.identity import DefaultAzureCredential
+except Exception:  # pragma: no cover
+    DefaultAzureCredential = None
+
 logger = logging.getLogger(__name__)
+
+# Cognitive Services token scope for Azure Identity
+COGNITIVE_SERVICES_SCOPE = "https://cognitiveservices.azure.com/.default"
+
+
+def _get_speech_auth_token(resource_id: str = "") -> str | None:
+    """Get an authorization token using DefaultAzureCredential.
+
+    For multi-service Cognitive Services accounts with local auth disabled,
+    returns the token in 'aad#<resource-id>#<token>' format when resource_id is provided.
+
+    Args:
+        resource_id: Azure resource ID for multi-service resources (optional).
+            When provided, returns token in aad# format.
+
+    Returns:
+        The token string (aad# format if resource_id provided) or None if authentication fails.
+    """
+    if DefaultAzureCredential is None:
+        logger.warning("azure-identity not installed; cannot use token-based auth")
+        return None
+
+    try:
+        credential = DefaultAzureCredential()
+        token = credential.get_token(COGNITIVE_SERVICES_SCOPE)
+        logger.info("Obtained speech auth token via DefaultAzureCredential")
+        # Return aad# format for multi-service resources with local auth disabled
+        if resource_id:
+            return f"aad#{resource_id}#{token.token}"
+        return token.token
+    except Exception as exc:
+        logger.warning("Failed to get token via DefaultAzureCredential: %s", exc)
+        return None
 
 
 def _mask_secret(value: str, *, show_last: int = 4) -> str:
@@ -76,6 +114,7 @@ class PersonalVoiceConfig:
 
     speech_key: str = ""
     speech_region: str = ""
+    speech_resource_id: str = ""  # Required for multi-service resources with local auth disabled
     voice_name: str = "DragonLatestNeural"
     language: str = "en-US"
 
@@ -92,9 +131,18 @@ class PersonalVoiceConfig:
     personal_voice_voice_talent_name: str = ""
     personal_voice_company_name: str = ""
 
-    def validate_for_synthesis(self) -> None:
+    def validate_for_synthesis(self, allow_identity_auth: bool = True) -> None:
+        """Validate config for synthesis.
+
+        Args:
+            allow_identity_auth: If True, speech_key is optional when
+                DefaultAzureCredential is available.
+        """
         missing: list[str] = []
-        if not self.speech_key.strip():
+        # Key is optional if Azure Identity is available
+        key_missing = not self.speech_key.strip()
+        identity_unavailable = not allow_identity_auth or DefaultAzureCredential is None
+        if key_missing and identity_unavailable:
             missing.append("speech_key")
         if not self.speech_region.strip():
             missing.append("speech_region")
@@ -797,9 +845,26 @@ def synthesize_personal_voice_to_wave_file(
 
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        speech_config = sdk.SpeechConfig(
-            subscription=config.speech_key, region=config.speech_region
-        )
+        # Create speech config: prefer key, fallback to Azure Identity token
+        if config.speech_key.strip():
+            speech_config = sdk.SpeechConfig(
+                subscription=config.speech_key, region=config.speech_region
+            )
+            logger.debug("Using subscription key for personal voice synthesis")
+        else:
+            auth_token = _get_speech_auth_token(resource_id=config.speech_resource_id)
+            if not auth_token:
+                return {
+                    "ok": False,
+                    "error": "Failed to obtain auth token via DefaultAzureCredential",
+                    "hint": "Ensure you're logged in (az login) or have valid Azure credentials.",
+                }
+            speech_config = sdk.SpeechConfig(auth_token=auth_token, region=config.speech_region)
+            logger.info(
+                "Using DefaultAzureCredential token for personal voice synthesis (resource_id=%s)",
+                "set" if config.speech_resource_id else "not set",
+            )
+
         speech_config.set_speech_synthesis_output_format(
             sdk.SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm
         )

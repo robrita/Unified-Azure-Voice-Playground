@@ -41,10 +41,28 @@ source .venv/bin/activate
 4. **Configure Azure Speech credentials:**
 
 Create a `.env` file or configure through the UI:
+
+**Option A: Dedicated Speech resource (API key)**
 ```bash
 AZURE_SPEECH_REGION=eastus
 AZURE_SPEECH_KEY=your_speech_key_here
 ```
+
+**Option B: Multi-service Cognitive Services (Azure Identity)**
+
+If your Azure resource has API keys disabled (`disableLocalAuth: true`) or you prefer Azure Identity authentication:
+
+```bash
+AZURE_SPEECH_REGION=eastus
+AZURE_SPEECH_RESOURCE_ID=/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.CognitiveServices/accounts/<resource-name>
+```
+
+> **Note:** Multi-service Cognitive Services resources require the full resource ID for token-based authentication. You can find your resource ID in the Azure Portal under **Properties** or via:
+> ```bash
+> az cognitiveservices account show --name <resource-name> --resource-group <rg> --query id -o tsv
+> ```
+
+Ensure you're logged in with Azure CLI (`az login`) or have valid Azure credentials for `DefaultAzureCredential`.
 
 ## 🚀 Usage
 
@@ -88,6 +106,7 @@ The application opens at `http://localhost:8501`
 
 ### 0️⃣ Configuration
 - Store Azure Speech credentials locally (gitignored)
+- Support for API key or Azure Identity authentication
 - Configure base voice name and language
 - Manage speaker profiles with friendly names
 - Persistent configuration across sessions
@@ -109,7 +128,7 @@ The application opens at `http://localhost:8501`
 ### 🎙️ Voice Gallery
 - Browse sample Dragon HD Omni voices and filter by locale, gender, age group
 - Adjust prosody (pitch, rate, volume) and auto-generate SSML
-- Download SSML or preview audio using Speech SDK (AZURE_SPEECH_REGION/KEY)
+- Preview audio using Speech SDK (supports API key or Azure Identity)
 
 ### 💰 Pricing
 - View Azure Speech Service pricing information
@@ -120,6 +139,7 @@ The application opens at `http://localhost:8501`
 
 - **Framework:** Streamlit 1.50.0 (Python web app framework)
 - **Speech Service:** Azure Cognitive Services Speech SDK 1.38.0+
+- **Authentication:** Azure Identity (DefaultAzureCredential) or API key
 - **API Integration:** Azure Custom Voice REST API
 - **Configuration:** Pydantic 2.10.6+ for data validation
 - **Package Manager:** uv + pyproject.toml (10-100x faster than pip)
