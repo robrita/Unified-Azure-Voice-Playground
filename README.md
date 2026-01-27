@@ -1,4 +1,4 @@
-![Voice Playground](img/voice-playground.png)
+![Voice Playground](img/personal-voice.png)
 
 # Azure Personal Voice Playground
 
@@ -67,6 +67,36 @@ AZURE_SPEECH_RESOURCE_ID=/subscriptions/<sub-id>/resourceGroups/<rg>/providers/M
 > ```
 
 Ensure you're logged in with Azure CLI (`az login`) or have valid Azure credentials for `DefaultAzureCredential`.
+
+5. **Assign RBAC roles (for Azure Identity):**
+
+When using Azure Identity authentication, assign these roles to your user/service principal:
+
+| Role | Purpose | Required For |
+|------|---------|--------------|
+| **Cognitive Services Speech User** | Text-to-speech synthesis | Voice Gallery, Personal Voice synthesis |
+| **Cognitive Services Speech Contributor** | Create/manage Personal Voice profiles | Personal Voice creation workflow |
+| **Cognitive Services User** | General Cognitive Services access | Multi-service resources |
+
+Assign roles via Azure CLI:
+```bash
+# Get your user object ID
+USER_ID=$(az ad signed-in-user show --query id -o tsv)
+
+# Assign Speech User role (for synthesis)
+az role assignment create \
+  --assignee $USER_ID \
+  --role "Cognitive Services Speech User" \
+  --scope /subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.CognitiveServices/accounts/<resource-name>
+
+# Assign Speech Contributor role (for Personal Voice creation)
+az role assignment create \
+  --assignee $USER_ID \
+  --role "Cognitive Services Speech Contributor" \
+  --scope /subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.CognitiveServices/accounts/<resource-name>
+```
+
+> **Note:** Role assignments may take 5-10 minutes to propagate.
 
 ## 🚀 Usage
 
