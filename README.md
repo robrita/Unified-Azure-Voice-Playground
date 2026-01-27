@@ -1,6 +1,10 @@
-![Dashboard Hero Banner](img/voice-playground.png)
+![Voice Playground](img/voice-playground.png)
 
 # Azure Personal Voice Playground
+
+![Voice Gallery](img/voice-gallery.png)
+
+# Azure Voice Gallery
 
 A Streamlit-based playground for testing Azure Speech Service's Personal Voice feature. Create custom text-to-speech voices using your own audio samples, manage speaker profiles, and synthesize speech with personalized voices.
 
